@@ -1,0 +1,10 @@
+{
+  "name": "public-transport-schedule-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot that helps you get soonest public transport schedule",
+  "main": "src/index.ts",
+  "repository": "https://github.com/u20291022/public-transport-schedule-bot.git",
+  "author": "u20291022 <u20291022@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
