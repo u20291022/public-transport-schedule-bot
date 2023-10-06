@@ -13,6 +13,13 @@ class Time {
 
     return timeString;
   }
+
+  public getCurrentHour(): number {
+    const date = new Date();
+    const currentHour = date.getHours();
+
+    return currentHour;
+  }
 }
 
 export const time = new Time();

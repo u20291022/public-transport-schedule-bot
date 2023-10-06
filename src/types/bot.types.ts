@@ -1,3 +1,5 @@
+import { TransportType } from "./requests.type";
+
 export interface CommandData {
   command: string;
   args: string[];
@@ -7,4 +9,15 @@ export interface CommandData {
   from: {
     id: number;
   };
+}
+
+export enum InlineKeyboardType {
+  TRANSPORT,
+  NUMBERS,
+  STOPS
+}
+
+export interface InlineKeyboardData {
+  transportType: TransportType;
+  transportNumber: string;
 }
