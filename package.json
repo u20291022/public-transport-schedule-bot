@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "tsc & node dist/index.js"
+  },
   "name": "public-transport-schedule-bot",
   "version": "1.0.0",
   "description": "Telegram bot that helps you get soonest public transport schedule",
@@ -6,5 +9,13 @@
   "repository": "https://github.com/u20291022/public-transport-schedule-bot.git",
   "author": "u20291022 <u20291022@gmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@types/jsdom": "^21.1.3",
+    "@types/node": "^20.8.2",
+    "axios": "^1.5.1",
+    "dotenv": "^16.3.1",
+    "jsdom": "^22.1.0",
+    "telegraf": "^4.14.0"
+  }
 }
