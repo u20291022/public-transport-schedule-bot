@@ -1,6 +1,6 @@
 import { Telegram } from "telegraf";
-import { CommandData } from "../types/bot.types";
-import { logs } from "../utils/logs";
+import { CommandData } from "../../types/commands.types";
+import { logs } from "../../utils/logs";
 
 class StartCommand {
   private getStartText(): string {

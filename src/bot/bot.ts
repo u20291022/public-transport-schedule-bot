@@ -1,7 +1,10 @@
 import { Telegraf, Telegram } from "telegraf";
-import { CommandData } from "../types/bot.types";
-import { commands } from "./commands";
+import { callbackQuery } from "telegraf/filters";
+import { CommandData } from "../types/commands.types";
+import { commands } from "./commands/commands";
 import { logs } from "../utils/logs";
+import { QueryData } from "../types/query.types";
+import { queryHandler } from "./query-handler";
 
 export class Bot {
   public readonly me: Telegraf;
@@ -26,14 +29,23 @@ export class Bot {
     });
   }
 
+  private listenQuery() {
+    this.me.on(callbackQuery("data"), async (ctx) => {
+      const queryData: QueryData = ctx.callbackQuery;
+      queryHandler.handle(queryData, this.methods);
+      await ctx.answerCbQuery().catch(() => {});
+    })
+  }
+
   public launch(): void {
     const botCommands = commands.getCommands();
     this.methods.setMyCommands(botCommands);
 
     this.listenStartCommand();
     this.listenScheduleCommand();
+    this.listenQuery();
 
     this.me.launch();
-    logs.write("Bot has started!")
+    logs.write("Bot has started!");
   }
 }

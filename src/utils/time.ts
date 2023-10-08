@@ -1,7 +1,8 @@
 class Time {
   public getCurrentDateString(): string {
     const date = new Date();
-    const dateString = date.toLocaleDateString("ru-RU")
+    const rawDateString = date.toLocaleDateString("ru-RU");
+    const dateString = rawDateString.replace(/\./g, "-");
 
     return dateString;
   }
@@ -14,11 +15,11 @@ class Time {
     return timeString;
   }
 
-  public getCurrentHour(): number {
+  public getCurrentMinute(): number {
     const date = new Date();
-    const currentHour = date.getHours();
+    const currentMinute = date.getMinutes();
 
-    return currentHour;
+    return currentMinute;
   }
 }
 

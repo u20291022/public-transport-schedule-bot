@@ -1,5 +1,5 @@
 import { BotCommand } from "telegraf/typings/core/types/typegram";
-import { CommandData } from "../types/bot.types";
+import { CommandData } from "../../types/commands.types";
 import { Telegram } from "telegraf";
 import { startCommand } from "./start-command";
 import { scheduleCommand } from "./schedule-command";
@@ -18,19 +18,16 @@ class Commands {
     startCommand.execute(commandData, methods);
   }
 
-  private executeScheduleCommand(
-    commandData: CommandData,
-    methods: Telegram
-  ): void {
+  private executeScheduleCommand(commandData: CommandData, methods: Telegram): void {
     scheduleCommand.execute(commandData, methods);
   }
 
   public handle(commandData: CommandData, methods: Telegram): void {
     const commandName = commandData.command;
     const userId = commandData.from.id;
-    
+
     const rawAdminId = process.env["ADMIN_ID"];
-    
+
     if (!rawAdminId) {
       throw new Error("Enter ADMIN_ID in .env file!");
     }

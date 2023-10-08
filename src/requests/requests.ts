@@ -1,13 +1,28 @@
-import { TransportType } from "../types/requests.type";
-import { transportNumbersRequest } from "./transport-numbers-request";
+import { TransportRoute, TransportStop, TransportType } from "../types/transport.types";
+import { transportRoutes } from "./transport-routes";
+import { transportStops } from "./transport-stops";
 
 class Requests {
-  public async getNumbersByTransportType(transportType: TransportType): Promise<string[]> {
+  public async getRoutesByTransportType(transportType: TransportType) {
+    const routes = await transportRoutes.getAllRoutes().catch(() => {
+      return { busses: [], trolleys: [], trams: [] };
+    });
+
     switch (transportType) {
-      case TransportType.BUS: return await transportNumbersRequest.getBussesNumbers();
-      case TransportType.TROLLEY: return await transportNumbersRequest.getTrolleyNumbers();
-      case TransportType.TRAM: return await transportNumbersRequest.getTramNumbers();
+      case TransportType.BUS:
+        return routes.busses;
+      case TransportType.TROLLEY:
+        return routes.trolleys;
+      case TransportType.TRAM:
+        return routes.trams;
     }
+  }
+
+  public async getStopsByTransportRoute(transportRoute: TransportRoute): Promise<TransportStop[]> {
+    const stops = await transportStops.getStops(transportRoute).catch(() => {
+      return [];
+    });
+    return stops;
   }
 }
 
