@@ -28,7 +28,13 @@ class ScheduleCommand {
 
   private parseTransportRouteFromArgs(commandArgs: string[]): string | undefined {
     if (commandArgs.length < 2) return undefined;
-    return commandArgs.length === 2 ? commandArgs[1] : undefined;
+
+    const transportType = this.parseTransportRouteFromArgs(commandArgs);
+    const transportRoute =
+      (transportType === TransportType.BUS ? "" : transportType === TransportType.TROLLEY ? "0" : "00") +
+      commandArgs[1];
+
+    return transportRoute;
   }
 
   public async execute(commandData: CommandData, methods: Telegram) {
@@ -47,8 +53,8 @@ class ScheduleCommand {
     const scheduleData: ScheduleData = {
       message: messageData,
       transportData,
-      pageNumber: 0
-    }
+      pageNumber: 0,
+    };
 
     scheduleHandler.handle(methods, scheduleData);
 
