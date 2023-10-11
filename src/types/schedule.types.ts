@@ -1,6 +1,7 @@
 export interface TransportData {
   transportType?: string;
   transportRoute?: string;
+  transportDirection?: string;
   transportStop?: string;
 }
 

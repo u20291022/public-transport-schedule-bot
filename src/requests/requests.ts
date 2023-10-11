@@ -1,4 +1,4 @@
-import { TransportRoute, TransportStop, TransportType } from "../types/transport.types";
+import { TransportDirection, TransportRoute, TransportStop, TransportType } from "../types/transport.types";
 import { transportRoutes } from "./transport-routes";
 import { transportStops } from "./transport-stops";
 
@@ -18,8 +18,8 @@ class Requests {
     }
   }
 
-  public async getStopsByTransportRoute(transportRoute: TransportRoute): Promise<TransportStop[]> {
-    const stops = await transportStops.getStops(transportRoute).catch(() => {
+  public async getStopsByTransportRoute(transportRoute: TransportRoute, transportDirection: TransportDirection): Promise<TransportStop[]> {
+    const stops = await transportStops.getStops(transportRoute, transportDirection).catch(() => {
       return [];
     });
     return stops;

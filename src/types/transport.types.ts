@@ -5,6 +5,10 @@ export enum TransportType {
 }
 
 export type TransportRoute = string;
+export enum TransportDirection {
+  START2END = "s2e",
+  END2START = "e2s",
+}
 
 export interface TransportStop {
   id: string,

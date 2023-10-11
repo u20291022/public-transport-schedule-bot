@@ -1,8 +1,7 @@
 import { Telegram } from "telegraf";
-import { TransportRoute, TransportStop, TransportType } from "../types/transport.types";
-import { MessageData, ScheduleData, TransportData } from "../types/schedule.types";
-import { InlineKeyboardButton } from "telegraf/typings/core/types/typegram";
+import { ScheduleData } from "../types/schedule.types";
 import { inlineKeyboards } from "./inline-keyboard";
+import { scheduleText } from "./schedule-text";
 
 class ScheduleHandler {
   public async handle(methods: Telegram, scheduleData: ScheduleData): Promise<void> {
@@ -10,33 +9,24 @@ class ScheduleHandler {
     const transportData = scheduleData.transportData;
     const pageNumber = scheduleData.pageNumber;
 
-    if (!messageId) {
-      // from command
-      const transportTypesText = "Выберите тип транспорта:";
-      const transportTypesKeyboard = await inlineKeyboards.getKeyboardByTransportData(transportData, pageNumber);
+    const messageText = await scheduleText.getTextByTransportData(transportData);
+    const messageKeyboard = await inlineKeyboards.getKeyboardByTransportData(transportData, pageNumber);
 
+    if (!messageId) { // from command
       await methods
-        .sendMessage(chatId, transportTypesText, {
+        .sendMessage(chatId, messageText, {
           reply_markup: {
-            inline_keyboard: transportTypesKeyboard,
+            inline_keyboard: messageKeyboard,
           },
         })
         .catch(() => {});
     }
 
-    if (messageId && chatId) {
-      // from query
-      // edit message and keyboard by current step
-      const newMessageText = "123";
-      const newMessageKeyboard: InlineKeyboardButton[][] = await inlineKeyboards.getKeyboardByTransportData(
-        transportData,
-        pageNumber
-      );
-
-      // await methods.editMessageCaption(chatId, messageId, undefined, newMessageText).catch(() => {});
+    if (messageId && chatId) { // from query
+      await methods.editMessageText(chatId, messageId, undefined, messageText).catch(() => {});
       await methods
         .editMessageReplyMarkup(chatId, messageId, undefined, {
-          inline_keyboard: newMessageKeyboard,
+          inline_keyboard: messageKeyboard,
         })
         .catch(() => {});
     }

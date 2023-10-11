@@ -1,4 +1,4 @@
-import { appendFileSync, existsSync, mkdirSync } from "fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 
 class FileSystem {
   public readonly dataDirectoryPath = "./data";
@@ -21,6 +21,34 @@ class FileSystem {
 
   public append<Data extends { toString(): string }>(path: string, data: Data): void {
     appendFileSync(path, data.toString() + "\n");
+  }
+
+  public readToString(path: string): string {
+    if (this.exists(path)) {
+      return readFileSync(path, { encoding: "utf-8" });
+    }
+
+    return "";
+  }
+
+  public readToJson<Data extends {}>(path: string): Data {
+    try {
+      const stringifiedData = this.readToString(path);
+      const jsonData = JSON.parse(stringifiedData);
+      return jsonData;
+    }
+    catch {
+      return <Data>{};
+    }
+  }
+
+  public write<Data extends { toString(): string }>(path: string, data: Data): void {
+    writeFileSync(path, data.toString());
+  }
+
+  public writeJson<Data extends {}>(path: string, data: Data): void {
+    const stringifiedData = JSON.stringify(data, null, "\t");
+    this.write(path, stringifiedData);
   }
 }
 

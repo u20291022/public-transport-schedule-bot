@@ -19,13 +19,14 @@ class QueryHandler {
 
     const [transportQueryData, pageQueryData] = data.split("~"); // type|route|stop || ...~pageDirection|pageNumber
     
-    let [transportType, transportRoute, transportStop] = transportQueryData.split("|");
+    let [transportType, transportRoute, transportDirection, transportStop] = transportQueryData.split("|");
     let [pageDirection, pageNumberString] = pageQueryData ? pageQueryData.split("|") : [];
     
     let pageNumber = 0;
     let transportData = {
       transportType,
       transportRoute,
+      transportDirection,
       transportStop,
     };
 

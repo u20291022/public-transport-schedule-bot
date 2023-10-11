@@ -1,4 +1,4 @@
-import { TransportRoute } from "./transport.types";
+import { TransportRoute, TransportStop } from "./transport.types";
 
 export interface TransportStatesResponse {
   time: string;
@@ -31,4 +31,12 @@ export interface TransportStopsResponse {
       }[];
     }[];
   }[];
+}
+
+interface Directions {
+  [direction: string]: TransportStop[];
+}
+
+export interface RoutesAndStops {
+  [route: string]: Directions;
 }
