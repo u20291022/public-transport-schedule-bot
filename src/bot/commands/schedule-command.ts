@@ -29,7 +29,7 @@ class ScheduleCommand {
   private parseTransportRouteFromArgs(commandArgs: string[]): string | undefined {
     if (commandArgs.length < 2) return undefined;
 
-    const transportType = this.parseTransportRouteFromArgs(commandArgs);
+    const transportType = this.parseTransportTypeFromArgs(commandArgs);
     const transportRoute =
       (transportType === TransportType.BUS ? "" : transportType === TransportType.TROLLEY ? "0" : "00") +
       commandArgs[1];
